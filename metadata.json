@@ -1,0 +1,6 @@
+{
+  "name": "Generador de Excusas Absurdas",
+  "description": "Genera excusas delirantes e irresistibles para llegar tarde combinando al azar personajes, situaciones insólitas y desenlaces caóticos con animaciones explosivas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
