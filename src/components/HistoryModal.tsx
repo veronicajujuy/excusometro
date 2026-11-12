@@ -42,14 +42,14 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-white dark:bg-slate-900 border-4 border-black rounded-3xl shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+      <div className="relative w-full max-w-xl max-h-[80vh] flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b-2 border-black bg-amber-200 dark:bg-amber-950/70">
+        <div className="flex items-center justify-between p-4 px-5 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-black dark:text-amber-300" />
-            <h2 className="font-arcade text-lg sm:text-xl text-black dark:text-white uppercase tracking-wide">
-              Historial de Excusas ({history.length})
+            <Clock className="w-4 h-4 text-slate-500" />
+            <h2 className="font-display font-bold text-base text-slate-900 dark:text-white">
+              Historial ({history.length})
             </h2>
           </div>
 
@@ -58,25 +58,25 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
               playClickSound();
               onClose();
             }}
-            className="p-1.5 rounded-xl border-2 border-black bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all cursor-pointer"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
             aria-label="Cerrar modal"
           >
-            <X className="w-5 h-5 text-black dark:text-white" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Filter bar */}
-        <div className="flex items-center justify-between p-3 px-5 border-b-2 border-black/10 dark:border-white/10 bg-slate-50 dark:bg-slate-800 text-xs">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between p-3 px-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850 text-xs">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => {
                 playClickSound();
                 setFilterFavorites(false);
               }}
-              className={`px-3 py-1 font-bold rounded-lg border-2 transition-all ${
+              className={`px-2.5 py-1 font-semibold rounded-md transition-colors ${
                 !filterFavorites
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-black/30'
+                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800'
               }`}
             >
               Todas ({history.length})
@@ -86,13 +86,13 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                 playClickSound();
                 setFilterFavorites(true);
               }}
-              className={`px-3 py-1 font-bold rounded-lg border-2 transition-all flex items-center gap-1 ${
+              className={`px-2.5 py-1 font-semibold rounded-md transition-colors flex items-center gap-1 ${
                 filterFavorites
-                  ? 'bg-amber-300 text-black border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]'
-                  : 'bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-black/30'
+                  ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800'
               }`}
             >
-              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-600" />
+              <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
               Favoritas ({history.filter((h) => h.isFavorite).length})
             </button>
           </div>
@@ -103,26 +103,23 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                 playClickSound();
                 onClearHistory();
               }}
-              className="text-red-500 hover:text-red-700 font-bold flex items-center gap-1 transition-colors"
+              className="text-slate-400 hover:text-rose-500 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
             >
-              <Trash2 className="w-3.5 h-3.5" />
-              Borrar Todo
+              <Trash2 className="w-3 h-3" />
+              <span>Limpiar</span>
             </button>
           )}
         </div>
 
         {/* Scrollable List */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3">
+        <div className="flex-1 overflow-y-auto p-4 space-y-2.5">
           {displayedList.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <p className="text-4xl mb-2">🎲</p>
-              <p className="font-bold text-slate-600 dark:text-slate-300">
+            <div className="text-center py-10 text-slate-400">
+              <p className="text-2xl mb-1">🎲</p>
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
                 {filterFavorites
-                  ? 'No marcaste ninguna excusa como favorita todavía.'
-                  : 'Aún no generaste ninguna excusa en esta sesión.'}
-              </p>
-              <p className="text-xs text-slate-400 mt-1">
-                Apretá el botón gigante para empezar a crear obras de arte.
+                  ? 'No hay excusas guardadas como favoritas.'
+                  : 'Aún no se generaron excusas.'}
               </p>
             </div>
           ) : (
@@ -131,10 +128,10 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
               return (
                 <div
                   key={item.id}
-                  className="p-4 rounded-2xl border-2 border-black bg-white dark:bg-slate-800 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-yellow-50/50 dark:hover:bg-slate-750 transition-all flex flex-col gap-2"
+                  className="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900 transition-colors flex flex-col gap-2"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                    <p className="text-sm text-slate-800 dark:text-slate-200 leading-snug">
                       "{item.character.emoji} {item.character.text}{' '}
                       {item.situation.emoji} {item.situation.text},{' '}
                       {item.ending.emoji} {item.ending.text}."
@@ -142,46 +139,37 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
 
                     <button
                       onClick={() => onToggleFavorite(item.id)}
-                      className="p-1 rounded-lg text-slate-400 hover:text-amber-500 transition-colors shrink-0"
+                      className="p-1 text-slate-400 hover:text-amber-500 transition-colors shrink-0 cursor-pointer"
                     >
                       <Star
-                        className={`w-4 h-4 ${
+                        className={`w-3.5 h-3.5 ${
                           item.isFavorite
                             ? 'text-amber-500 fill-amber-400'
-                            : 'text-slate-400'
+                            : ''
                         }`}
                       />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-700 pt-2">
-                    <span className="font-semibold text-[11px]">
+                  <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 dark:border-slate-800/80 pt-2">
+                    <span className="text-[11px]">
                       {new Date(item.timestamp).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit',
                       })}
                       {' · '}
-                      <span className="text-amber-600 dark:text-amber-400 font-bold">
-                        {item.absurdityScore}% Absurdo
+                      <span className="text-amber-600 dark:text-amber-400 font-medium">
+                        {item.absurdityScore}%
                       </span>
                     </span>
 
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => handleCopy(item)}
-                        className="px-2.5 py-1 rounded-md border border-black bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-200 font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                        className="px-2 py-0.5 rounded text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1 cursor-pointer"
                       >
-                        {isCopied ? (
-                          <>
-                            <Check className="w-3 h-3 text-emerald-600" />
-                            <span>Copiada</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3 h-3" />
-                            <span>Copiar</span>
-                          </>
-                        )}
+                        {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                        <span>{isCopied ? 'Copiada' : 'Copiar'}</span>
                       </button>
 
                       <button
@@ -189,9 +177,9 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                           onSelectExcuse(item);
                           onClose();
                         }}
-                        className="px-2.5 py-1 rounded-md border border-black bg-yellow-300 text-black font-bold text-[11px] hover:bg-yellow-400 cursor-pointer"
+                        className="px-2 py-0.5 rounded text-[11px] font-semibold text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 cursor-pointer"
                       >
-                        Cargar en Tablero
+                        Cargar
                       </button>
                     </div>
                   </div>

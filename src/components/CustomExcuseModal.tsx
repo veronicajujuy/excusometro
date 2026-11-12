@@ -48,14 +48,14 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border-4 border-black rounded-3xl shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
+      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b-2 border-black bg-pink-300 dark:bg-pink-950/70">
+        <div className="flex items-center justify-between p-4 px-5 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-black dark:text-pink-300" />
-            <h2 className="font-arcade text-lg sm:text-xl text-black dark:text-white uppercase tracking-wide">
-              Sumar Tu Propio Disparate
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            <h2 className="font-display font-bold text-base text-slate-900 dark:text-white">
+              Personalizar Ruleta
             </h2>
           </div>
 
@@ -64,25 +64,25 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
               playClickSound();
               onClose();
             }}
-            className="p-1.5 rounded-xl border-2 border-black bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 transition-all cursor-pointer"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
             aria-label="Cerrar modal"
           >
-            <X className="w-5 h-5 text-black dark:text-white" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
           {/* Slot Type Selector */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
-              ¿Qué tipo de elemento querés agregar?
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+              ¿Qué parte querés sumar?
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { type: 'character', label: '1. Personaje', emoji: '🦹' },
-                { type: 'situation', label: '2. Situación', emoji: '⚔️' },
-                { type: 'ending', label: '3. Desenlace', emoji: '🏃' },
+                { type: 'character', label: 'Personaje', emoji: '🦹' },
+                { type: 'situation', label: 'Situación', emoji: '⚔️' },
+                { type: 'ending', label: 'Desenlace', emoji: '🏃' },
               ].map((item) => (
                 <button
                   type="button"
@@ -91,13 +91,13 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
                     playClickSound();
                     setTargetType(item.type as 'character' | 'situation' | 'ending');
                   }}
-                  className={`py-2 px-2 rounded-xl border-2 border-black font-bold text-xs flex flex-col items-center gap-1 cursor-pointer transition-all ${
+                  className={`py-2 px-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-all border ${
                     targetType === item.type
-                      ? 'bg-yellow-300 text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] scale-102'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
+                      ? 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white'
+                      : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
-                  <span className="text-base">{item.emoji}</span>
+                  <span>{item.emoji}</span>
                   <span>{item.label}</span>
                 </button>
               ))}
@@ -106,8 +106,8 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
 
           {/* Text Input */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-              Texto del Disparate:
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
+              Texto del disparate:
             </label>
             <textarea
               required
@@ -116,30 +116,30 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
               onChange={(e) => setText(e.target.value)}
               placeholder={
                 targetType === 'character'
-                  ? 'Ej: Un pingüino con chaleco de fuerza y rollers...'
+                  ? 'Ej: Un pingüino con chaleco y patines...'
                   : targetType === 'situation'
-                  ? 'Ej: me desafió a cantar karaoke en el vagón del subte...'
-                  : 'Ej: y tuve que fingir demencia hasta llegar a la esquina...'
+                  ? 'Ej: me desafió a cantar en el subte...'
+                  : 'Ej: y tuve que fingir demencia hasta llegar...'
               }
-              className="w-full p-3 rounded-xl border-2 border-black bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 
           {/* Emoji Picker */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-              Elegí un Emoji Representativo:
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
+              Emoji:
             </label>
-            <div className="flex flex-wrap gap-1.5 p-2 bg-slate-100 dark:bg-slate-800 rounded-xl border-2 border-black">
+            <div className="flex flex-wrap gap-1.5 p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200/80 dark:border-slate-800">
               {quickEmojis.map((e) => (
                 <button
                   type="button"
                   key={e}
                   onClick={() => setEmoji(e)}
-                  className={`w-9 h-9 rounded-lg border text-lg flex items-center justify-center transition-transform ${
+                  className={`w-8 h-8 rounded-lg text-base flex items-center justify-center transition-all ${
                     emoji === e
-                      ? 'bg-yellow-300 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] scale-110'
-                      : 'border-transparent hover:bg-white dark:hover:bg-slate-700'
+                      ? 'bg-white dark:bg-slate-700 shadow-xs scale-110'
+                      : 'hover:bg-white/60 dark:hover:bg-slate-700/60'
                   }`}
                 >
                   {e}
@@ -148,43 +148,25 @@ export const CustomExcuseModal: React.FC<CustomExcuseModalProps> = ({
             </div>
           </div>
 
-          {/* Intensity Slider */}
-          <div>
-            <div className="flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Nivel de Absurdo:</span>
-              <span className="font-arcade text-pink-600 dark:text-pink-400">
-                {intensity} / 5
-              </span>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="5"
-              value={intensity}
-              onChange={(e) => setIntensity(Number(e.target.value))}
-              className="w-full accent-pink-500 cursor-pointer"
-            />
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
             disabled={!text.trim() || addedSuccess}
-            className={`w-full py-3.5 px-4 rounded-2xl border-3 border-black font-arcade text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`w-full py-2.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer ${
               addedSuccess
-                ? 'bg-emerald-400 text-black shadow-none'
-                : 'bg-yellow-300 hover:bg-yellow-400 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none'
+                ? 'bg-emerald-600 text-white'
+                : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100'
             }`}
           >
             {addedSuccess ? (
               <>
-                <Check className="w-5 h-5 text-black" />
-                <span>¡Agregado al Tablero!</span>
+                <Check className="w-4 h-4" />
+                <span>¡Agregado con éxito!</span>
               </>
             ) : (
               <>
-                <Plus className="w-5 h-5 text-black" />
-                <span>Incorporar a la Ruleta</span>
+                <Plus className="w-4 h-4" />
+                <span>Agregar a la ruleta</span>
               </>
             )}
           </button>

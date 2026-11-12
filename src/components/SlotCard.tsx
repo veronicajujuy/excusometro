@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock, Unlock, RefreshCw } from 'lucide-react';
+import { Lock, Unlock, RotateCw } from 'lucide-react';
 import { ExcuseComponent } from '../data/excusesData';
 
 interface SlotCardProps {
@@ -29,129 +29,87 @@ export const SlotCard: React.FC<SlotCardProps> = ({
 }) => {
   const current = displayItem || item;
 
-  const colorStyles = {
-    yellow: {
-      bg: 'bg-amber-100 dark:bg-amber-950/40',
-      border: 'border-black dark:border-amber-400',
-      badge: 'bg-amber-400 text-black',
-      tag: 'bg-amber-200 text-amber-900 dark:bg-amber-900/60 dark:text-amber-200',
-      glow: 'shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_rgba(251,191,36,0.9)]',
-      hoverBorder: 'hover:border-amber-500',
-      lockActive: 'bg-amber-400 text-black',
-    },
-    pink: {
-      bg: 'bg-pink-100 dark:bg-pink-950/40',
-      border: 'border-black dark:border-pink-400',
-      badge: 'bg-pink-500 text-white',
-      tag: 'bg-pink-200 text-pink-900 dark:bg-pink-900/60 dark:text-pink-200',
-      glow: 'shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_rgba(244,114,182,0.9)]',
-      hoverBorder: 'hover:border-pink-500',
-      lockActive: 'bg-pink-500 text-white',
-    },
-    cyan: {
-      bg: 'bg-emerald-100 dark:bg-emerald-950/40',
-      border: 'border-black dark:border-emerald-400',
-      badge: 'bg-emerald-400 text-black',
-      tag: 'bg-emerald-200 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-200',
-      glow: 'shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_rgba(52,211,153,0.9)]',
-      hoverBorder: 'hover:border-emerald-500',
-      lockActive: 'bg-emerald-400 text-black',
-    },
+  const accentPills = {
+    yellow: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/50',
+    pink: 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/50',
+    cyan: 'text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/30 border-teal-200 dark:border-teal-900/50',
   }[accentColor];
 
   return (
     <div
-      className={`relative flex flex-col justify-between p-4 sm:p-5 rounded-2xl border-4 ${colorStyles.border} ${colorStyles.bg} ${colorStyles.glow} transition-all duration-200 min-h-[220px] sm:min-h-[250px] ${
-        isLocked ? 'ring-4 ring-black/40 dark:ring-white/40' : ''
+      className={`relative flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-slate-900 border transition-all duration-200 min-h-[200px] sm:min-h-[220px] ${
+        isLocked
+          ? 'border-amber-400 dark:border-amber-500 shadow-sm ring-2 ring-amber-400/20'
+          : 'border-slate-200/90 dark:border-slate-800 shadow-xs hover:border-slate-300 dark:hover:border-slate-700'
       }`}
     >
       {/* Top Bar inside Card */}
-      <div className="flex items-center justify-between gap-2 border-b-2 border-black/10 dark:border-white/10 pb-2 mb-3">
+      <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/80 pb-3">
         <div className="flex items-center gap-2">
-          <span
-            className={`font-arcade text-[11px] sm:text-xs px-2.5 py-1 rounded-md font-bold uppercase tracking-wider ${colorStyles.badge} border-2 border-black`}
-          >
+          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${accentPills}`}>
             {label}
           </span>
-          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 hidden sm:inline">
+          <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
             {sublabel}
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          {/* Single Reroll Button */}
+        <div className="flex items-center gap-1">
+          {/* Individual Reroll */}
           <button
             onClick={onSingleReroll}
             disabled={isSpinning || isLocked}
             title={`Sortear solo ${label}`}
-            className="p-1.5 rounded-lg border-2 border-black bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-90 transition-all disabled:opacity-40 disabled:pointer-events-none"
+            className="p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-30 cursor-pointer"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
+            <RotateCw className="w-3.5 h-3.5" />
           </button>
 
-          {/* Lock / Freeze Button */}
+          {/* Lock / Freeze */}
           <button
             onClick={onToggleLock}
             disabled={isSpinning}
-            title={isLocked ? 'Desbloquear slot' : 'Bloquear slot para mantenerlo'}
-            className={`p-1.5 rounded-lg border-2 border-black font-medium text-xs flex items-center gap-1 transition-all ${
+            title={isLocked ? 'Desbloquear slot' : 'Fijar este elemento'}
+            className={`px-2 py-0.5 rounded-md text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
               isLocked
-                ? `${colorStyles.lockActive} shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] scale-105`
-                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100'
+                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold'
+                : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
             }`}
           >
-            {isLocked ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
-            <span className="text-[10px] font-bold uppercase">
-              {isLocked ? 'Fijo' : 'Fijar'}
-            </span>
+            {isLocked ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3" />}
+            <span className="text-[11px]">{isLocked ? 'Fijado' : 'Fijar'}</span>
           </button>
         </div>
       </div>
 
-      {/* Reel Center Slot Display */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center my-auto overflow-hidden py-2">
+      {/* Reel Slot Display */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center py-4">
         <div
           className={`transition-all duration-150 transform ${
             isSpinning
-              ? 'scale-95 opacity-70 blur-[1px] translate-y-1'
-              : 'scale-100 opacity-100 blur-0 translate-y-0'
+              ? 'scale-95 opacity-60 blur-[1px]'
+              : 'scale-100 opacity-100 blur-0'
           }`}
         >
-          {/* Giant Animated Emoji */}
-          <div className="text-4xl sm:text-5xl mb-2 filter drop-shadow select-none animate-bounce" style={{ animationDuration: isSpinning ? '0.3s' : '2.5s' }}>
+          {/* Expressive Emoji */}
+          <div className="text-4xl sm:text-5xl mb-2 select-none">
             {current ? current.emoji : '❓'}
           </div>
 
-          {/* Main Content Text */}
-          <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug tracking-tight px-1 font-display">
-            {current ? current.text : 'Apretá el botón para sortear'}
+          {/* Card Text */}
+          <p className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug tracking-tight px-2 font-display">
+            {current ? current.text : '...'}
           </p>
         </div>
       </div>
 
-      {/* Bottom Metadata & Tag */}
-      <div className="mt-3 pt-2 border-t-2 border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-        <span className={`px-2 py-0.5 rounded-md font-medium text-[11px] ${colorStyles.tag}`}>
-          #{current ? current.tag : 'Aleatorio'}
+      {/* Bottom Category Note */}
+      <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+        <span>{current?.tag || 'General'}</span>
+        <span className="text-slate-300 dark:text-slate-600">·</span>
+        <span className="text-slate-400">
+          Nivel {current?.intensity || 3}/5
         </span>
-
-        {/* Absurdity Dots */}
-        <div className="flex items-center gap-1" title="Nivel de delirio">
-          <span className="text-[10px] uppercase font-bold text-slate-400">Locura:</span>
-          <div className="flex gap-0.5">
-            {[1, 2, 3, 4, 5].map((level) => {
-              const active = current && current.intensity >= level;
-              return (
-                <span
-                  key={level}
-                  className={`w-1.5 h-3 rounded-xs border border-black/50 ${
-                    active ? 'bg-black dark:bg-yellow-400' : 'bg-black/10 dark:bg-white/10'
-                  }`}
-                />
-              );
-            })}
-          </div>
-        </div>
       </div>
     </div>
   );

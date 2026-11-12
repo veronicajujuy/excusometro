@@ -13,15 +13,13 @@
   }
 }
 
-/* Neo-brutalist dot background pattern */
-.bg-comic-dots {
-  background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
-  background-size: 20px 20px;
+/* Subtle ambient background */
+.bg-subtle-mesh {
+  background-color: #fafaf9;
 }
 
-.dark .bg-comic-dots {
-  background-image: radial-gradient(#334155 1.5px, transparent 1.5px);
-  background-size: 20px 20px;
+.dark .bg-subtle-mesh {
+  background-color: #0c0f17;
 }
 
 /* Comic shake and bounce animations */
